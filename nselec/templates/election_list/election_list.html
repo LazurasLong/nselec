@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block heading %}Elections{% endblock %}
+{% block main %}
+<p>This is some example content</p>
+{% if current %}
+  <h2>Current</h2>
+  <dl>
+    {% for el in current %}
+      <dt><a href="{{url_for('election_page', id=el)}}"><b>{{current[el].name|e}}</b></a></dt>
+      <dd><em>{{current[el].desc|e}}</em></dd>
+    {% endfor %}
+  </dl>
+{% endif %}
+{% if future %}
+  <h2>Future</h2>
+  <dl>
+    {% for el in future %}
+      <dt><b>{{future[el].name|e}}</b></dt>
+      <dd><em>{{future[el].desc|e}}</em></dd>
+    {% endfor %}
+  </dl>
+{% endif %}
+{% if past %}
+  <h2>Past</h2>
+  <dl>
+    {% for el in past %}
+      <dt><a href="{{url_for('results_page', id=el)}}"<b>{{past[el].name|e}}</b></a></dt>
+      <dd><em>{{past[el].desc|e}}</em></dd>
+    {% endfor %}
+  </dl>
+{% endif %}
+{#
+<p>If you are a regional official with the necessary permissions, you may upload a new election <a href={{url_for('submit_page')}}>here</a>.</p>
+#}
+{% endblock %}
