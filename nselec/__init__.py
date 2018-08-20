@@ -21,5 +21,7 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
-    
+    from . import election_list
+    app.register_blueprint(election_list.bp)
+
     return app
