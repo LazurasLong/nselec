@@ -8,7 +8,7 @@
     <link rel=icon href="https://conifer.ed588.me/favicon.ico">
   </head>
   <body>
-    <h1>{% block heading %}Example page{% endblock %}</h1>
+    <h1>{% block heading %}{% endblock %}</h1>
     {% with msgs = get_flashed_messages() %}
       {% if msgs %}
         <ul class="flashes">
