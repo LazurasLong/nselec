@@ -13,4 +13,3 @@ def close_db(e=None):
 
 def init_app(app):
     app.teardown_appcontext(close_db) # close the db at the end of the request
-    
