@@ -2,14 +2,14 @@ from tinydb import TinyDB
 from tinydb_serialization import Serializer, SerializationMiddleware
 from flask import g, current_app
 
-from datetime import datetime as dt
+from datetime import datetime, timezone
 
 class DatetimeSerializer(Serializer):
-    OBJ_CLASS = dt
+    OBJ_CLASS = datetime
     def encode(self, obj):
-        return obj.isoformat()
+        return str(obj.replace(tzinfo=timezone.utc).timestamp())
     def decode(self, s):
-        return dt.fromisoformat(s)
+        return datetime.fromtimestamp(float(s), timezone.utc)
 sz = SerializationMiddleware()
 sz.register_serializer(DatetimeSerializer(), 'Datetime')
 
