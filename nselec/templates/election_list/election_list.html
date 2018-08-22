@@ -2,12 +2,12 @@
 {% block title %}Election List{% endblock %}
 {% block heading %}Elections in Conifer{% endblock %}
 {% block main %}
-{% if current %}
+{% if present %}
   <h2>Current</h2>
   <dl>
     {% for el in present %}
-      <dt><a href="{{url_for('election_page', id=el)}}"><b>{{present[el].name|e}}</b></a></dt>
-      <dd><em>{{present[el].desc|e}}</em></dd>
+      <dt><a href="{{url_for('election_page', id=el['id'])}}"><b>{{el.name|e}}</b></a></dt>
+      <dd><em>{{el.desc|e}}</em></dd>
     {% endfor %}
   </dl>
 {% endif %}
