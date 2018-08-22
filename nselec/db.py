@@ -11,7 +11,7 @@ class DatetimeSerializer(Serializer):
     def decode(self, s):
         return datetime.fromtimestamp(float(s), timezone.utc)
 sz = SerializationMiddleware()
-sz.register_serializer(DatetimeSerializer(), 'Datetime')
+sz.register_serializer(DatetimeSerializer(), 'timestamp')
 
 
 def get_db():
