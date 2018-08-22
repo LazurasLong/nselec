@@ -5,9 +5,9 @@
 {% if current %}
   <h2>Current</h2>
   <dl>
-    {% for el in current %}
-      <dt><a href="{{url_for('election_page', id=el)}}"><b>{{current[el].name|e}}</b></a></dt>
-      <dd><em>{{current[el].desc|e}}</em></dd>
+    {% for el in present %}
+      <dt><a href="{{url_for('election_page', id=el)}}"><b>{{present[el].name|e}}</b></a></dt>
+      <dd><em>{{present[el].desc|e}}</em></dd>
     {% endfor %}
   </dl>
 {% endif %}
