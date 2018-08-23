@@ -8,11 +8,11 @@ def time_type(start, end):
     if end < start:
         raise ValueError("end was after start")
     if now <= start:
-        return "past"
+        return "future"
     elif start < now <= end:
         return "present"
     elif end < now:
-        return "future"
+        return "past"
     else:
         # :thonk:
         raise ValueError("I'm not sure how this happened because this should be impossible")
