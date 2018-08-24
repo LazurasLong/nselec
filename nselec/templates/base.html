@@ -1,28 +1,42 @@
+{% set DT_FMT = "%a, %d %b %Y %X" %}
+{% macro msgb(msg, cls="info") %}
+<div class="notification is-{{cls}}">
+  <button class="delete" onclick="this.parentElement.parentElement.removeChild(this.parentElement)"></button>
+  {{ msg }}
+</div>
+{% endmacro %}
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html>
   <head>
     <meta charset="utf-8">
-    <title>{% block title %}{% endblock %} 🌲</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:700" rel="stylesheet">
-    <link rel="stylesheet" href="{{url_for('static', filename='site.css')}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %} - Elections</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
     <link rel=icon href="https://conifer.ed588.me/favicon.ico">
   </head>
   <body>
-    <h1>{% block heading %}{% endblock %}</h1>
-    {% with msgs = get_flashed_messages() %}
-      {% if msgs %}
-        <ul class="flashes">
+  <section class="section">
+    <div class="container">
+      {% block heading %}
+        <h1 class="title">Elections</h1>
+      {% endblock %}
+      {% with msgs = get_flashed_messages(category_filter=["message"]) %}
+        {% if msgs %}
           {% for msg in msgs %}
-            <li>{{ msg }}</li>
+            {{ msgb(msg) }}
           {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-    {% block main %}{% endblock %}
-    <hr>
-    <footer>
-    {#  <p><a href="{{url_for('main_page')}}">Main Page</a>|<a href=//conifer.ed588.me>Conifer Site</a>|<a href="//nationstates.net/region=conifer">Region Page</a>|<a href="{{url_for('submit_page')}}">New election</a></p>
-      <img id=trc-logo src="{{url_for('static', filename='trc.png')}}"> #}
-    </footer>
+        {% endif %}
+      {% endwith %}
+      {% with msgs = get_flashed_messages(category_filter=["error"]) %}
+        {% if msgs %}
+          {% for msg in msgs %}
+            {{ msgb(msg, "danger") }}
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      {% block main %}{% endblock %}
+    </div>
+  </section>
   </body>
 </html>
