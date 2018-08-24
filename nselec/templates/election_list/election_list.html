@@ -1,33 +1,44 @@
 {% extends "base.html" %}
 {% block title %}Election List{% endblock %}
-{% block heading %}Elections in Conifer{% endblock %}
+{% block heading %}<h1 class="title is-1">Elections in Conifer</h1>{% endblock %}
+{% macro election_box(name, desc, timestring, dt, button_text=None, button_url=None, button_type="link") %}
+<div class="box">
+  <div class="content">
+    <p class="is-size-4 has-text-grey-dark">{{name|e}}</p>
+    <p class="is-size-5 has-text-grey">{{desc|e}}</p>
+    <p class="is-size-7 has-text-grey-light"><time datetime="{{dt.iso}}" title="{{dt.iso}}">{{ timestring + dt.human }}</p>
+    {% if button_text and button_url %}
+      <a class="button is-{{button_type}}" href="{{button_url}}">
+        <span>{{ button_text|e }}</span>
+        <span class="icon is-small">
+          <i class="fas fa-arrow-circle-right"></i>
+        </span>
+      </a>
+    {% endif %}
+  </div>
+</div>
+{% endmacro %}
 {% block main %}
 {% if present %}
-  <h2>Current</h2>
-  <dl>
+  <h2 class="title is-3">Current</h2>
     {% for el in present %}
-      <dt><a href="{{url_for('election_page', id=el['id'])}}"><b>{{el.name|e}}</b></a></dt>
-      <dd><em>{{el.desc|e}}</em></dd>
+      {{ election_box(el.name, el.desc, "Finishes ", el.times.end, "Vote", url_for('vote.election_page', el_id=el.doc_id)) }}
     {% endfor %}
-  </dl>
 {% endif %}
 {% if future %}
-  <h2>Future</h2>
-  <dl>
+  <h2 class="title is-3">Future</h2>
     {% for el in future %}
-      <dt><b>{{future[el].name|e}}</b></dt>
-      <dd><em>{{future[el].desc|e}}</em></dd>
+      {{ election_box(el.name, el.desc, "Starts ", el.times.start) }}
     {% endfor %}
-  </dl>
 {% endif %}
 {% if past %}
-  <h2>Past</h2>
-  <dl>
+  <h2 class="title is-3">Past</h2>
     {% for el in past %}
-      <dt><a href="{{url_for('results_page', id=el)}}"<b>{{past[el].name|e}}</b></a></dt>
-      <dd><em>{{past[el].desc|e}}</em></dd>
+      {{ election_box(el.name, el.desc, "Finished ", el.times.end, "View results", url_for('results_page', id=el.doc_id), "success")}}
     {% endfor %}
-  </dl>
+{% endif %}
+{% if not (present or past or future) %}
+<p class="is-size-5 has-text-grey"><em>It doesn't look like there are any elections...</em></p>
 {% endif %}
 {#
 <p>If you are a regional official with the necessary permissions, you may upload a new election <a href={{url_for('submit_page')}}>here</a>.</p>

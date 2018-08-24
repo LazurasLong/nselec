@@ -11,5 +11,6 @@ setup(
         'requests',
         'tinydb',
         'tinydb-serialization',
+        'ago',
     ],
 )
