@@ -1,7 +1,7 @@
+from datetime import datetime, timezone
 from tinydb import TinyDB
 from tinydb_serialization import Serializer, SerializationMiddleware
 from flask import g, current_app
-from datetime import datetime, timezone
 from nselec.classes import FancyTime
 
 sz = SerializationMiddleware()
