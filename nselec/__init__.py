@@ -24,4 +24,7 @@ def create_app(test_config=None):
     from . import election_list
     app.register_blueprint(election_list.bp)
 
+    from . import vote
+    app.register_blueprint(vote.bp, url_prefix="/vote")
+
     return app
