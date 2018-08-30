@@ -13,4 +13,7 @@ def election(el_id):
     if el is None:
         abort(404)
         return
-    return render_template("vote/yesno.html", el=el)
+    return render_template("vote/yesno.html", el=el el_id=el_id)
+
+@bp.route("/<int:el_id>/submit")
+def vote_page(el_id):
