@@ -1,0 +1,39 @@
+{% set verify_modal | safe %}
+<script>
+$(function(){
+  $(".show-verify-modal").click(function(){
+    console.log("in show");
+    $("#verify-modal").addClass("is-active");
+  });
+  $(".hide-verify-modal").click(function(){
+    console.log("in hide");
+    $("#verify-modal").removeClass("is-active");
+  })
+})
+</script>
+<div id="verify-modal" class="modal">
+  <div class="modal-background hide-verify-modal"></div>
+  <div class="modal-content">
+    <div class="box">
+      <div class="content">
+        <h1>Verification Code</h1>
+        <p>
+          To verify to the election site that you are who you say you are, you need
+          to copy a code from the NationStates website (which I have embedded here)
+          to a box on the form. Simply copy the code below, then hit "close" and paste it
+          into the input on the main page.
+        </p>
+        <p>
+          If you're having trouble getting this to work, see the
+          <a href='#'>troubleshooting page</a>.
+        </p>
+        <iframe style="width: 100%; height: 300px; border: 2px solid grey; border-radius: 3px;" src="https://embed.nationstates.net/page=verify_login"></iframe>
+      </div>
+      <div class="buttons is-right">
+        <button class="button hide-verify-modal">Close</button>
+      </div>
+    </div>
+  </div>
+  <button class="modal-close is-large hide-verify-modal" aria-label="close"></button>
+</div>
+{% endset %}
