@@ -22,7 +22,7 @@
 {% if present %}
   <h2 class="title is-3">Current</h2>
     {% for el in present %}
-      {{ election_box(el.name, el.desc, "Finishes ", el.times.end, "Vote", url_for('vote.election_page', el_id=el.doc_id)) }}
+      {{ election_box(el.name, el.desc, "Finishes ", el.times.end, "Vote", url_for('vote.election', el_id=el.doc_id)) }}
     {% endfor %}
 {% endif %}
 {% if future %}

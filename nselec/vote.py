@@ -7,7 +7,7 @@ from nselec.utils import time_type
 bp = Blueprint('vote', __name__)
 
 @bp.route("/<int:el_id>")
-def election_page(el_id):
+def election(el_id):
     db = get_db()
     el = db.get(doc_id=el_id)
     if el is None:
