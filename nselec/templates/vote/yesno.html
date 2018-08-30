@@ -7,4 +7,37 @@
 {% block main %}
   {{ verify_modal }}
   <p class="is-3">{{ el.desc }}</p>
+  <div class="content">
+    <form method="post" action="#" enctype="multipart/form-data">
+      <div class="field">
+        <label class="label">Nation Name</label>
+        <div class="control">
+          <div class="select">
+            <select name=nation>
+              <option disabled selected>---Please Select---</option>
+              <option>Nation 1</option>
+              <option>Nation 2</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <label class="label">Verification Code</label>
+      <div class="field is-grouped">
+        <div class="control">
+          <a href="#" class="button show-verify-modal">Get code</a>
+        </div>
+        <div class="control is-expanded">
+          <input name=verify class="input" type="text" placeholder="Enter verification code here">
+          <p class="help">Click "get code", copy the code, then enter it into the box</p>
+        </div>
+
+      </div>
+      <button class="button is-link">
+        <span>Submit Vote</span>
+        <span class="icon is-small">
+          <i class="fas fa-arrow-right"></i>
+        </span>
+      </button>
+    </form>
+  </div>
 {% endblock %}
