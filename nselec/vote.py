@@ -13,4 +13,4 @@ def election_page(el_id):
     if el is None:
         abort(404)
         return
-    return render_template("vote\yesno.html", el=el)
+    return render_template("vote/yesno.html", el=el)
