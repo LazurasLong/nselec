@@ -1,15 +1,18 @@
 {% set verify_modal | safe %}
 <script>
 $(function(){
-  $(".show-verify-modal").click(function(){
-    console.log("in show");
+  $(".show-verify-modal").click(function() {
     $("#verify-modal").addClass("is-active");
   });
-  $(".hide-verify-modal").click(function(){
-    console.log("in hide");
+  $(".hide-verify-modal").click(function() {
     $("#verify-modal").removeClass("is-active");
-  })
-})
+  });
+  $(document).keydown(function(event) {
+    if (event.which == 27) {
+      $("#verify-modal").removeClass("is-active");
+    }
+  });
+});
 </script>
 <div id="verify-modal" class="modal">
   <div class="modal-background hide-verify-modal"></div>
