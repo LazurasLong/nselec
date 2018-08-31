@@ -15,6 +15,12 @@ class DatetimeSerializer(Serializer):
         return FancyTime(datetime.fromtimestamp(float(s), timezone.utc))
 sz.register_serializer(DatetimeSerializer(), 'timestamp')
 
+# Operations
+def list_append(field, item):
+    def transform(doc):
+        doc[field].append(item)
+    return transform
+
 # Flask integration
 def get_db():
     if 'db' not in g:
