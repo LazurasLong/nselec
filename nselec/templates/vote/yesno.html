@@ -15,8 +15,9 @@
           <div class="select">
             <select name=nation>
               <option disabled selected>---Please Select---</option>
-              <option>Nation 1</option>
-              <option>Nation 2</option>
+              {% for k,v in voters|dictsort %}
+                <option value={{k}}>{{v}}</option>
+              {% endfor %}
             </select>
           </div>
         </div>
