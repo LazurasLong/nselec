@@ -8,7 +8,7 @@
   {{ verify_modal }}
   <p class="is-3">{{ el.desc }}</p>
   <div class="content">
-    <form method="post" action="#" enctype="multipart/form-data">
+    <form method="post" action="{{url_for('vote.submit',el_id=el_id)}}" enctype="multipart/form-data">
       <div class="field">
         <label class="label">Nation Name</label>
         <div class="control">
