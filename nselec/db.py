@@ -4,8 +4,9 @@ from tinydb_serialization import Serializer, SerializationMiddleware
 from flask import g, current_app
 from nselec.classes import FancyTime
 
-sz = SerializationMiddleware()
 
+# Serialization
+sz = SerializationMiddleware()
 class DatetimeSerializer(Serializer):
     OBJ_CLASS = FancyTime
     def encode(self, obj):
@@ -14,6 +15,7 @@ class DatetimeSerializer(Serializer):
         return FancyTime(datetime.fromtimestamp(float(s), timezone.utc))
 sz.register_serializer(DatetimeSerializer(), 'timestamp')
 
+# Flask integration
 def get_db():
     if 'db' not in g:
         g.db = TinyDB(current_app.config['DATABASE'], storage=sz)
