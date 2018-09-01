@@ -22,20 +22,15 @@
       {% block heading %}
         <h1 class="title">Elections</h1>
       {% endblock %}
-      {% with msgs = get_flashed_messages(category_filter=["message"]) %}
-        {% if msgs %}
-          {% for msg in msgs %}
-            {{ msgb(msg) }}
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
-      {% with msgs = get_flashed_messages(category_filter=["error"]) %}
-        {% if msgs %}
-          {% for msg in msgs %}
-            {{ msgb(msg, "danger") }}
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
+      {% for msg in get_flashed_messages(category_filter=["message"]) %}
+        {{ msgb(msg) }}
+      {% endfor %}
+      {% for msg in get_flashed_messages(category_filter=["error"]) %}
+        {{ msgb(msg, "danger") }}
+      {% endfor %}
+      {% for msg in get_flashed_messages(category_filter=["success"]) %}
+        {{ msgb(msg, "success") }}
+      {% endfor %}
       {% block main %}{{ content }}{% endblock %}
     </div>
   </section>
