@@ -1,7 +1,7 @@
 from flask import (
     Blueprint, render_template, abort, request, redirect, url_for, flash
 )
-from nselec.db import get_db
+from nselec.db import get_db, list_append, inc_result
 from nselec.utils import time_type
 from nselec.ns_inter import get_allowed_voters, verify_code
 
@@ -35,8 +35,8 @@ def submit(el_id):
         nation_name = get_allowed_voters()[nation]
     except KeyError:
         nation_name = None
-    code = request.form.get("verify", None);print(code)
-    vote = request.form.get("vote", None);print(vote)
+    code = request.form.get("verify", None)
+    vote = request.form.get("vote", None)
     ok, err = check_vote(el_id, nation, code, vote)
     if not ok:
         flash("{}'s vote was not registered: {}".format(nation_name or "(unknown)", err), "error")
@@ -45,9 +45,6 @@ def submit(el_id):
         register_vote(el_id, nation, vote)
         flash("{}'s vote was registered successfully!".format(nation_name), "success")
         return redirect(url_for('election_list.election_list'))
-
-def register_vote(*args):
-    pass
 
 def check_vote(el_id, nation, code, vote):
     if nation is None or code is None or vote is None:
@@ -67,3 +64,14 @@ def check_vote(el_id, nation, code, vote):
         if vote not in ['for','against']:
             return False, "invalid vote (must be for or against)"
     return True, "ok"
+
+def register_vote(el_id, nation, vote):
+    db = get_db()
+    el = db.get(doc_id=el_id)
+    if el['type'] == "yesno":
+        register_vote_yesno(el_id, nation, vote)
+
+def register_vote_yesno(el_id, nation, vote):
+    db = get_db()
+    db.update(list_append("voters", nation), doc_ids=[el_id])
+    db.update(inc_result(vote), doc_ids=[el_id])
