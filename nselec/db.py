@@ -21,10 +21,27 @@ def list_append(field, item):
         doc[field].append(item)
     return transform
 
+def inc_result(field):
+    # increments value in ['votes'] if it's there, otherwise creates it with value 1
+    def transform(doc):
+        if field in doc['votes']:
+            doc['votes'][field] += 1
+        else:
+            doc['votes'][field] = 1
+    return transform
+
+
 # Flask integration
+def _get_db():
+    if current_app.config['ENV'] == "production":
+        return TinyDB(current_app.config['DATABASE'], storage=sz)
+    else:
+        return TinyDB(current_app.config['DATABASE'], storage=sz, sort_keys=True, indent=4, separators=(',', ': '))
+
+
 def get_db():
     if 'db' not in g:
-        g.db = TinyDB(current_app.config['DATABASE'], storage=sz)
+        g.db = _get_db()
     return g.db
 
 def close_db(e=None):
