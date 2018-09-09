@@ -38,7 +38,6 @@ def _get_db():
     else:
         return TinyDB(current_app.config['DATABASE'], storage=sz, sort_keys=True, indent=4, separators=(',', ': '))
 
-
 def get_db():
     if 'db' not in g:
         g.db = _get_db()
