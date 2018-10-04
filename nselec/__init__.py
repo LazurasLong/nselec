@@ -33,4 +33,7 @@ def create_app(test_config=None):
     from . import vote
     app.register_blueprint(vote.bp, url_prefix="/vote")
 
+    from . import results
+    app.register_blueprint(results.bp, url_prefix="/results")
+
     return app
