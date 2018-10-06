@@ -34,7 +34,7 @@
 {% if past %}
   <h2 class="title is-3">Past</h2>
     {% for el in past %}
-      {{ election_box(el.name, el.desc, "Finished ", el.times.end, "View results", url_for('results.results', el_id=el.doc_id), "success")}}
+      {{ election_box(el.name, el.desc, "Finished ", el.times.end, "View results", url_for('results.results', el_id=el.doc_id))}}
     {% endfor %}
 {% endif %}
 {% if not (present or past or future) %}

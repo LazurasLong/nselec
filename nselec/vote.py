@@ -21,8 +21,8 @@ def election(el_id):
             voters = get_allowed_voters()
             if el['type'] == "yesno":
                 return render_template("vote/yesno.html", el=el, el_id=el_id, voters=voters)
-            else:
-                return render_template("base.html", content="Ooer, not implemented (yet)")
+            elif el['type'] == "ranked":
+                return render_template("vote/ranked.html", el=el, el_id=el_id, voters=voters)
         else:
             abort(404)
 
