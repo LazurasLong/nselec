@@ -12,6 +12,12 @@
   </nav>
 {% endblock %}
 {% block main %}
+  <script>
+  $( function() {
+    $( "#options" ).sortable();
+    $( "#options" ).disableSelection();
+  })
+  </script>
   {{ verify_modal }}
   <p class="is-3">{{ el.desc }}</p>
   <div class="content">
@@ -40,17 +46,11 @@
         </div>
       </div>
       <div class="field">
-        <label class="label">Are you voting <em>for</em> or <em>against</em> this?</label>
-        <div class="control">
-          <label class="radio">
-            <input type="radio" name="vote" value="for">
-            For
-          </label>
-          <label class="radio">
-            <input type="radio" name="vote" value="against">
-            Against
-          </label>
-        </div>
+        <label class="label">Please order the options.</label>
+        <ul id="options">
+          {% for opt in }
+          <li class="box"><span class="icon is-small"><i class="fas fa-arrows-alt-v"></i></span>Item</li>
+        </ul>
       </div>
       <button class="button is-link">
         <span>Submit Vote</span>

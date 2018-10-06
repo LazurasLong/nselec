@@ -1,18 +1,26 @@
 {% set verify_modal | safe %}
 <script>
-$(function(){
-  $(".show-verify-modal").click(function() {
-    $("#verify-modal").addClass("is-active");
-  });
-  $(".hide-verify-modal").click(function() {
-    $("#verify-modal").removeClass("is-active");
-  });
-  $(document).keydown(function(event) {
-    if (event.which == 27) {
-      $("#verify-modal").removeClass("is-active");
+window.onload = function(){
+  var shows = document.getElementsByClassName("show-verify-modal");
+  var hides = document.getElementsByClassName("hide-verify-modal");
+  for (var i = 0; i < shows.length; i++) {
+    var e = shows[i];
+    e.onclick = function() {
+      document.getElementById("verify-modal").classList.add("is-active");
     }
-  });
-});
+  }
+  for (var i = 0; i < hides.length; i++) {
+    var e = hides[i];
+    e.onclick = function() {
+      document.getElementById("verify-modal").classList.remove("is-active");
+    }
+  }
+  document.onkeydown = function(ev) {
+    if (event.key == "Escape") {
+      document.getElementByID("verify-modal").classList.remove("is-active");
+    }
+  };
+}
 </script>
 <div id="verify-modal" class="modal">
   <div class="modal-background hide-verify-modal"></div>
