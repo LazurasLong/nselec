@@ -6,7 +6,8 @@ def time_type(start, end):
     """
     start = getattr(start, "dt", start)
     end = getattr(end, "dt", end)
-    now = dt.now(tz.utc)
+    now = dt.now()
+    now = now.replace(tzinfo=tz.utc)
     if end < start:
         raise ValueError("end was after start")
     if now <= start:
