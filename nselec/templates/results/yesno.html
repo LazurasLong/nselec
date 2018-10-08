@@ -13,15 +13,24 @@
 {% block main %}
 <div class="content">
   <p class="is-3">{{ el.desc }}</p>
-  <h2>Result:</h1>
-  <p>"{{processed_results}}" is the winning option.</p>
-  <h2>Votes:</h2>
   {% if processed_results == "for" %}
+    <h2>Result:</h1>
+    <p>"For" got the most votes.</p>
+    <h2>Votes:</h2>
     <p>For: {{ results.for }}</p>
     <p>Against: {{ results.against }}</p>
+  {% elif processed_results == "against" %}
+    <h2>Result:</h1>
+    <p>"Against" got the most votes.</p>
+    <h2>Votes:</h2>
+    <p>Against: {{ results.against }}</p>
+    <p>For: {{ results.for }}</p>
   {% else %}
-    <p>Against: {{ results.against }}</p>
+    <h2>Result:</h1>
+    <p>It's a draw.</p>
+    <h2>Votes:</h2>
     <p>For: {{ results.for }}</p>
+    <p>Against: {{ results.against }}</p>
   {% endif %}
   <h2>Participating Voters:</h2>
   <ul>
