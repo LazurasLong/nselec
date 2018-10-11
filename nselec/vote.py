@@ -16,7 +16,7 @@ def election(el_id):
     else:
         tt = time_type(el['times']['start'], el['times']['end'])
         if tt == "past":
-            return redirect(url_for("results_page", el_id=el_id))
+            return redirect(url_for("results.results", el_id=el_id))
         elif tt == "present":
             voters = get_allowed_voters()
             if el['type'] == "yesno":
@@ -48,7 +48,7 @@ def submit(el_id):
 
 def check_vote(el_id, nation, code, vote):
     if nation is None or code is None or vote is None:
-        return False, "the nation, verification code, or vote was not specified";
+        return False, "the nation, verification code, or vote was not specified"
     voters = get_allowed_voters()
     if nation not in voters:
         return False, "that nation is not allowed to vote"
@@ -63,6 +63,15 @@ def check_vote(el_id, nation, code, vote):
     if el['type'] == "yesno":
         if vote not in ['for','against']:
             return False, "invalid vote (must be for or against)"
+    elif el['type'] == "ranked":
+        opts = vote.split(":")
+        for o in opts:
+            if not o.isdigit():
+                return False, "invalid option string (this is probably my fault, try contacting Honk Donk) (some non-digits) (debug: {})".format(vote)
+        seq = all(val == idx for idx, val in enumerate(sorted((int(o) for o in opts))))
+        if not seq:
+            return False, "invalid option string (this is probably my fault, try contacting Honk Donk) (non-consecutive options) (debug: {})".format(vote)
+
     return True, "ok"
 
 def register_vote(el_id, nation, vote):
@@ -70,8 +79,15 @@ def register_vote(el_id, nation, vote):
     el = db.get(doc_id=el_id)
     if el['type'] == "yesno":
         register_vote_yesno(el_id, nation, vote)
+    elif el['type'] == "ranked":
+        register_vote_ranked(el_id, nation, vote)
 
 def register_vote_yesno(el_id, nation, vote):
     db = get_db()
     db.update(list_append("voters", nation), doc_ids=[el_id])
     db.update(inc_result(vote), doc_ids=[el_id])
+
+def register_vote_ranked(el_id, nation, vote):
+    db = get_db()
+    db.update(list_append("voters", nation), doc_ids=[el_id])
+    db.update(list_append("votes", vote), doc_ids=[el_id])

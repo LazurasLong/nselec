@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 {% from "lib.j2" import verify_modal %}
 {% block title %}{{ el.name }}{% endblock %}
+{% block head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.6.0/Sortable.min.js"></script>
+<style>
+.sortable-chosen {
+  color: #fff;
+  background-color: #400;
+}
+</style>
+{% endblock %}
 {% block heading %}
   <h1 class="title is-1">{{ el.name }}</h1>
   <nav class="breadcrumb" aria-label="breadcrumbs">
@@ -13,10 +22,24 @@
 {% endblock %}
 {% block main %}
   <script>
-  $( function() {
-    $( "#options" ).sortable();
-    $( "#options" ).disableSelection();
-  })
+  function updateOptOrder(sorter) {
+    var s = sorter.toArray().join(":");
+    document.getElementById("opts").value = s;
+  }
+  window.addEventListener("load", function() {
+    var opts = document.getElementById("options");
+    var sorter = Sortable.create(opts, {
+      draggable: ".box",
+      animation: 250,
+      onUpdate: function(e) {
+        updateOptOrder(sorter);
+      }
+    });
+    updateOptOrder(sorter);
+    var b = document.getElementById("btn");
+    b.disabled = false;
+    b.classList.remove("is-loading");
+  });
   </script>
   {{ verify_modal }}
   <p class="is-3">{{ el.desc }}</p>
@@ -48,11 +71,13 @@
       <div class="field">
         <label class="label">Please order the options.</label>
         <ul id="options">
-          {% for opt in }
-          <li class="box"><span class="icon is-small"><i class="fas fa-arrows-alt-v"></i></span>Item</li>
+          {% for opt in el.options %}
+            <li class="box" data-id='{{loop.index0}}'><span class="icon is-small"><i class="fas fa-arrows-alt-v"></i></span>{{opt}}</li>
+          {%endfor%}
         </ul>
+        <input type="hidden" id="opts" name="vote" value="">
       </div>
-      <button class="button is-link">
+      <button disabled="disabled" id="btn" class="button is-link is-loading">
         <span>Submit Vote</span>
         <span class="icon is-small">
           <i class="fas fa-arrow-right"></i>

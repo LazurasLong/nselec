@@ -1,6 +1,6 @@
 {% set verify_modal | safe %}
 <script>
-window.onload = function(){
+window.addEventListener("load", function(e){
   var shows = document.getElementsByClassName("show-verify-modal");
   var hides = document.getElementsByClassName("hide-verify-modal");
   for (var i = 0; i < shows.length; i++) {
@@ -16,11 +16,11 @@ window.onload = function(){
     }
   }
   document.onkeydown = function(ev) {
-    if (event.key == "Escape") {
-      document.getElementByID("verify-modal").classList.remove("is-active");
+    if (ev.key == "Escape") {
+      document.getElementById("verify-modal").classList.remove("is-active");
     }
   };
-}
+});
 </script>
 <div id="verify-modal" class="modal">
   <div class="modal-background hide-verify-modal"></div>

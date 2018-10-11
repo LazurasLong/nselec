@@ -12,7 +12,8 @@
     <title>{% block title %}{% endblock %} - Elections</title>
     <link rel="stylesheet" href="{{url_for('static', filename='site.css')}}">
     <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
-    <link rel=icon href="https://conifer.ed588.me/favicon.ico">
+    <link rel=icon href="https://conifer.ed588.me/favicon.ico?v">
+    {% block head %}{% endblock %}
   </head>
   <body>
   <section class="section">
@@ -29,7 +30,10 @@
       {% for msg in get_flashed_messages(category_filter=["success"]) %}
         {{ msgb(msg, "success") }}
       {% endfor %}
-      {% block main %}{{ content }}{% endblock %}
+      {% block main %}
+      <p>{{ content }}</p>
+      <p><a href="{{url_for('election_list.election_list')}}">Click here to go back to the main page</a></p>
+      {% endblock %}
     </div>
   </section>
   <footer class="footer">
