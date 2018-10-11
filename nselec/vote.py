@@ -23,6 +23,8 @@ def election(el_id):
                 return render_template("vote/yesno.html", el=el, el_id=el_id, voters=voters)
             elif el['type'] == "ranked":
                 return render_template("vote/ranked.html", el=el, el_id=el_id, voters=voters)
+            else:
+                return render_template("base.html", content="Oops, that election type is not supported")
         else:
             abort(404)
 

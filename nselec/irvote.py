@@ -3,6 +3,7 @@ from collections import Counter
 from math import ceil
 
 def compute_winner(votes):
+    votes = list(votes)
     # votelist should be a list of lists of ints
     # we assume the votes are all already checked
     num_votes = len(votes)
@@ -11,7 +12,6 @@ def compute_winner(votes):
         return None
     needed_majority = ceil(num_votes/2.0)
     while True:
-        print("\n\n===\n"+str(votes))
         # nb: this may not be the original "first" choice if we've eliminated a candidate
         first_choices = [vote[0] for vote in votes]
         # now, count them:
@@ -23,9 +23,7 @@ def compute_winner(votes):
             # we need to find the lowest, or joint lowest candidate(s)
             # and remove them from all votes, then start again.
             single_worst = c_first_choices.most_common()[:-2:-1][0][1] # gets the last place one, for its value.
-            print(single_worst)
             worst_candidates = [i[0] for i in c_first_choices.items() if i[1] == single_worst]
-            print(worst_candidates)
             new_votes = []
             for vote in votes:
                 if vote[0] in worst_candidates:

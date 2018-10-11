@@ -1,3 +1,5 @@
+import copy
+
 from flask import (
     Blueprint, abort, redirect, url_for, render_template
 )
@@ -5,6 +7,7 @@ from flask import (
 from nselec.db import get_db
 from nselec.utils import time_type
 from nselec.ns_inter import get_allowed_voters
+from nselec.irvote import compute_winner
 
 bp = Blueprint('results', __name__)
 
@@ -23,6 +26,11 @@ def results(el_id):
         results = process_votes_yesno(el['votes'])
         voters = process_voters(el['voters'])
         return render_template("results/yesno.html", processed_results=results, results=el['votes'], voters=voters, el=el)
+    elif el['type'] == "ranked":
+        winner, results = process_votes_ranked(list(el['votes']), el)
+        print(winner, results)
+        voters = process_voters(el['voters'])
+        return render_template("results/ranked.html", winner=int(winner), processed_results=results, results=el['votes'], voters=voters, el=el)
     else:
         return render_template("base.html", content="Oops, that election type is not supported")
 
@@ -31,6 +39,21 @@ def process_votes_yesno(votes):
     if votes['for'] == votes['against']:
         return "draw"
     return "for" if votes['for'] > votes['against'] else "against"
+
+def process_votes_ranked(votes, el):
+    # votes will be a list of :-terminated strings
+    avotes = [ v.split(":") for v in votes ]
+    print("1:"+str(avotes))
+    cvotes = copy.deepcopy(avotes)
+    winner = compute_winner(cvotes)
+    print("2:"+str(avotes))
+    nvotes = []
+    for vote in avotes:
+        t = []
+        for entry in vote:
+            t.append(el['options'][int(entry)])
+        nvotes.append(t)
+    return winner, nvotes
 
 def process_voters(voters):
     # voters is a list of internal nation names
