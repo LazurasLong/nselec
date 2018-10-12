@@ -1,5 +1,3 @@
-import copy
-
 from flask import (
     Blueprint, abort, redirect, url_for, render_template
 )
@@ -44,8 +42,7 @@ def process_votes_ranked(votes, el):
     # votes will be a list of :-terminated strings
     avotes = [ v.split(":") for v in votes ]
     print("1:"+str(avotes))
-    cvotes = copy.deepcopy(avotes)
-    winner = compute_winner(cvotes)
+    winner = compute_winner(avotes)
     print("2:"+str(avotes))
     nvotes = []
     for vote in avotes:

@@ -1,9 +1,10 @@
 # instant-runoff preferential stuff
 from collections import Counter
 from math import ceil
+from copy import deepcopy
 
 def compute_winner(votes):
-    votes = list(votes)
+    votes = deepcopy(list(votes))
     # votelist should be a list of lists of ints
     # we assume the votes are all already checked
     num_votes = len(votes)
