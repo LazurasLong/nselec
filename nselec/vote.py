@@ -46,7 +46,7 @@ def submit(el_id):
     else:
         register_vote(el_id, nation, vote)
         flash("{}'s vote was registered successfully!".format(nation_name), "success")
-        return redirect(url_for('election_list.election_list'))
+        return redirect(url_for('index'))
 
 def check_vote(el_id, nation, code, vote):
     if nation is None or code is None or vote is None:

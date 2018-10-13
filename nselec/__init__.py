@@ -1,4 +1,6 @@
 import os
+import importlib
+
 from flask import Flask
 
 def noconf_voters_example_data():
@@ -30,10 +32,18 @@ def create_app(test_config=None):
     from . import election_list
     app.register_blueprint(election_list.bp)
 
-    from . import vote
-    app.register_blueprint(vote.bp, url_prefix="/vote")
+    modules = (
+        "vote",
+        "results",
+        "auth",
+        "admin"
+    )
 
-    from . import results
-    app.register_blueprint(results.bp, url_prefix="/results")
+    for modname in modules:
+        mod = importlib.import_module("nselec."+modname)
+        bp = mod.bp
+        app.register_blueprint(bp, url_prefix="/"+modname)
+
+    app.add_url_rule('/', endpoint="index")
 
     return app

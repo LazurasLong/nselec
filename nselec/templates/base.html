@@ -32,7 +32,7 @@
       {% endfor %}
       {% block main %}
       <p>{{ content }}</p>
-      <p><a href="{{url_for('election_list.election_list')}}">Click here to go back to the main page</a></p>
+      <p><a href="{{url_for('index')}}">Click here to go back to the main page</a></p>
       {% endblock %}
     </div>
   </section>
@@ -43,6 +43,13 @@
         Made by
         <a href="https://nationstates.net/honk_donk">ed588</a> for the region of
         <a href="https://nationstates.net/region=conifer">Conifer</a>.
+      </p>
+      <p>
+        {% if "user" in session %}
+          Logged in as <b>{{session.user}}</b>. <a href="{{url_for('admin.index')}}">Admin Page</a> | <a href="{{url_for('auth.logout')}}">Logout</a>
+        {% else %}
+          To manage elections, please <a href="{{url_for('auth.login')}}">login</a> first.
+        {% endif %}
       </p>
     </div>
   </footer>

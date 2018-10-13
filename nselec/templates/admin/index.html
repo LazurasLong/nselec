@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block heading %}
+<h1 class="title">Manage Elections</h1>
+{% endblock %}
+{% block main %}
+<a class="button is-link">Create new for/against election</a> <a class="button is-link">Create new ranked election</a>
+<table class="table is-hoverable">
+  <thead>
+    <tr>
+      <th><abbr title="Election ID">EID</abbr></th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for el in els %}
+      <tr>
+        <td>{{ el.doc_id }}</td>
+        <td>{{ el.name }}</td>
+        <td>{{ el.type }}</td>
+        <td><a href='#'><span class="icon"><i class="fas fa-edit"></i></span></a></td>
+        <td><a href='#'><span class="icon"><i class="fas fa-trash"></i></span></a></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

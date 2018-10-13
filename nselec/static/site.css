@@ -4000,7 +4000,7 @@ a.box:active {
 }
 
 .table {
-  background-color: white;
+  background-color: #f6f6f0;
   color: #363636;
 }
 .table td,
@@ -8430,6 +8430,8 @@ label.panel-block:hover {
 }
 
 .footer {
-  background-color: #dfdfdf;
+  background-color: #dedede;
   padding: 3rem 1.5rem 6rem;
 }
+
+/*# sourceMappingURL=mystyles.css.map */
