@@ -6,7 +6,7 @@
   <div class="content">
     <p class="is-size-4 has-text-grey-dark">{{name|e}}</p>
     <p class="is-size-5 has-text-grey">{{desc|e}}</p>
-    <p class="is-size-7 has-text-grey-light"><time datetime="{{dt.iso}}" title="{{dt.iso}}">{{ timestring + dt.human }}</p>
+    <p class="is-size-7 has-text-grey-light"><time datetime="{{dt.iso}}" title="{{dt.iso}}">{{ timestring + dt.human }}</time></p>
     {% if button_text and button_url %}
       <a class="button is-{{button_type}}" href="{{button_url}}">
         <span>{{ button_text|e }}</span>

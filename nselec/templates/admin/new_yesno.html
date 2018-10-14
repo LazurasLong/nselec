@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}New For/Against election{% endblock %}
+{% block heading %}
+<h1 class="title">New For/Against election</h1>
+{% endblock %}
+{% block main %}
+<p>A for/against election has two options, namely For and Against. Voters may vote for
+  either of these options.
+</p>
+<form method=POST>
+  <div class="field">
+    <label class="label">Name</label>
+    <div class="control">
+      <input name=name class="input" type="text">
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">Description</label>
+    <div class="control">
+      <textarea type=text name=desc class="textarea">
+    </div>
+  </div>
+  <div class="field is-grouped">
+    <label class="label">Start</label>
+    <div class="control">
+      <input name=start_date class="input" type="date">
+    </div>
+    <div class="control">
+      <input name=start_time class="input" type="time">
+    </div>
+  </div>

@@ -32,7 +32,7 @@ def election(el_id):
 def submit(el_id):
     if request.method == "GET":
         return redirect(url_for("vote.election",el_id=el_id))
-    nation = request.form.get("nation", None);print(nation)
+    nation = request.form.get("nation", None)
     try:
         nation_name = get_allowed_voters()[nation]
     except KeyError:

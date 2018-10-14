@@ -4,8 +4,9 @@ from flask import (
 )
 from nselec.db import get_db
 from nselec.utils import time_type
-from nselec.classes import FancyTime
+
 import datetime as dt
+
 bp = Blueprint('election_list', __name__)
 
 @bp.route('/')

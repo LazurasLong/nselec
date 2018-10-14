@@ -26,7 +26,6 @@ def results(el_id):
         return render_template("results/yesno.html", processed_results=results, results=el['votes'], voters=voters, el=el)
     elif el['type'] == "ranked":
         winner, results = process_votes_ranked(list(el['votes']), el)
-        print(winner, results)
         voters = process_voters(el['voters'])
         return render_template("results/ranked.html", winner=int(winner), processed_results=results, results=el['votes'], voters=voters, el=el)
     else:
@@ -41,9 +40,7 @@ def process_votes_yesno(votes):
 def process_votes_ranked(votes, el):
     # votes will be a list of :-terminated strings
     avotes = [ v.split(":") for v in votes ]
-    print("1:"+str(avotes))
     winner = compute_winner(avotes)
-    print("2:"+str(avotes))
     nvotes = []
     for vote in avotes:
         t = []
