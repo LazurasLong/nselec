@@ -1,6 +1,8 @@
 import os
 import importlib
 
+__version__ = "2.0a"
+
 from flask import Flask
 
 def noconf_voters_example_data():

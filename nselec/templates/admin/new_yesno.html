@@ -4,9 +4,10 @@
 <h1 class="title">New For/Against election</h1>
 {% endblock %}
 {% block main %}
-<p>A for/against election has two options, namely For and Against. Voters may vote for
-  either of these options.
-</p>
+<div class="content">
+  <p>A for/against election has two options, namely For and Against.</p>
+  <p>Voters may vote for either of these options.</p>
+</div>
 <form method=POST>
   <div class="field">
     <label class="label">Name</label>
@@ -17,10 +18,10 @@
   <div class="field">
     <label class="label">Description</label>
     <div class="control">
-      <textarea type=text name=desc class="textarea">
+      <textarea type=text name=desc class="textarea"></textarea>
     </div>
   </div>
-  <div class="field is-grouped">
+  <div class="field has-addons">
     <label class="label">Start</label>
     <div class="control">
       <input name=start_date class="input" type="date">
@@ -29,3 +30,19 @@
       <input name=start_time class="input" type="time">
     </div>
   </div>
+  <div class="field has-addons">
+    <label class="label">End</label>
+    <div class="control">
+      <input name=end_date class="input" type="date">
+    </div>
+    <div class="control">
+      <input name=end_time class="input" type="time">
+    </div>
+  </div>
+  <div class="field">
+    <div class="control">
+      <button class="button is-link">Submit</button>
+    </div>
+  </div>
+</form>
+{% endblock %}

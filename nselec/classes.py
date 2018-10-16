@@ -1,4 +1,4 @@
-from datetime import datetime, timezone as tz
+from datetime import datetime
 from ago import human
 
 class FancyTime():

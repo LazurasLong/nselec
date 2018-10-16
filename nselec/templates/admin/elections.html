@@ -1,11 +1,21 @@
 {% extends "base.html" %}
 {% block heading %}
 <h1 class="title is-1">Manage Elections</h1>
+<nav class="breadcrumb" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="{{url_for('index')}}">Elections</a></li>
+    <li><a href=""
+    <li class="is-active"><a href='#'>Vote</a></li>
+    <li class="is-active"><a href="#" aria-current="page">{{ el.name }}</a></li>
+  </ul>
+</nav>
 {% endblock %}
 {% block main %}
 <h2 class="title is-3">Future elections</h2>
-<a class="button is-link">Create new for/against election</a> <a class="button is-link">Create new ranked election</a>
+<a href="{{url_for('admin.new_yesno')}}" class="button is-link">Create new for/against election</a>
+<a href="{{url_for('admin.new_ranked')}}" class="button is-link">Create new ranked election</a>
 <table class="table is-hoverable">
+
   <thead>
     <tr>
       <th><abbr title="Election ID">EID</abbr></th>
@@ -32,6 +42,7 @@
   </tbody>
 </table>
 <h2 class="title is-3">Current Elections</h2>
+<p>Note that editing current and past elections is not allowed.</p>
 <table class="table is-hoverable">
   <thead>
     <tr>
