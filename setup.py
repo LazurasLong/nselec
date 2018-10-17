@@ -1,8 +1,9 @@
 from setuptools import find_packages, setup
+from nselec import __version__ as nselec_version
 
 setup(
     name='nselec',
-    version='2.0.0',
+    version=nselec_version,
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
