@@ -4,4 +4,4 @@ __pycache__/
 instance/
 dist/
 build/
-*.egg_info/
+*.egg-info/
