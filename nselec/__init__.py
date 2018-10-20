@@ -1,7 +1,7 @@
 import os
 import importlib
 
-__version__ = "2.0a2"
+__version__ = "2.0a3"
 
 from flask import Flask
 
