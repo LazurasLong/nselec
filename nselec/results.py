@@ -27,7 +27,7 @@ def results(el_id):
     elif el['type'] == "ranked":
         winner, results = process_votes_ranked(list(el['votes']), el)
         voters = process_voters(el['voters'])
-        return render_template("results/ranked.html", winner=int(winner), processed_results=results, results=el['votes'], voters=voters, el=el)
+        return render_template("results/ranked.html", winner=winner, processed_results=results, results=el['votes'], voters=voters, el=el)
     else:
         return render_template("base.html", content="Oops, that election type is not supported")
 

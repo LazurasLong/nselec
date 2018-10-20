@@ -17,7 +17,7 @@
   {% if winner == None %}
     <p>The voting result was a draw</p>
   {% else %}
-    <p>{{ el['options'][winner] }} is the winning option</p>
+    <p>{{ el['options'][winner|int] }} is the winning option</p>
   {% endif %}
   <h2>Votes:</h2>
   <ul>

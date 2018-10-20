@@ -98,7 +98,10 @@ def new_yesno():
             },
             "type": "yesno",
             "voters": [],
-            "votes": []
+            "votes": {
+                "for": 0,
+                "against": 0
+            }
         }
         db.insert(payload)
         flash("Successfully added new election!", "success")
