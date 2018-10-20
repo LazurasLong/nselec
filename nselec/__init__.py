@@ -1,7 +1,7 @@
 import os
 import importlib
 
-__version__ = "2.0a"
+__version__ = "2.0a1"
 
 from flask import Flask
 
@@ -47,5 +47,9 @@ def create_app(test_config=None):
         app.register_blueprint(bp, url_prefix="/"+modname)
 
     app.add_url_rule('/', endpoint="index")
+
+    @app.context_processor
+    def cp():
+        return {"version":__version__}
 
     return app

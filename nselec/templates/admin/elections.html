@@ -1,12 +1,12 @@
 {% extends "base.html" %}
+{% block title %}Manage Elections{% endblock %}
 {% block heading %}
 <h1 class="title is-1">Manage Elections</h1>
 <nav class="breadcrumb" aria-label="breadcrumbs">
   <ul>
     <li><a href="{{url_for('index')}}">Elections</a></li>
-    <li><a href=""
-    <li class="is-active"><a href='#'>Vote</a></li>
-    <li class="is-active"><a href="#" aria-current="page">{{ el.name }}</a></li>
+    <li><a href="{{url_for('admin.index')}}">Administration</a></li>
+    <li class="is-active"><a href="#" aria-current="page">Manage elections</a></li>
   </ul>
 </nav>
 {% endblock %}
@@ -35,8 +35,8 @@
         <td>{{ el.type }}</td>
         <td><time datetime="{{el.times.start.iso}}" title="{{el.times.start.iso}}">{{ el.times.start.human }}</time></td>
         <td><time datetime="{{el.times.end.iso}}" title="{{el.times.end.iso}}">{{ el.times.end.human }}</time></td>
-        <td><a href='#'><span class="icon"><i class="fas fa-edit"></i></span></a></td>
-        <td><a href='#'><span class="icon"><i class="fas fa-trash"></i></span></a></td>
+        <td><a href="{{url_for('admin.edit_election', el_id=el.doc_id)}}"><span class="icon"><i class="fas fa-edit"></i></span></a></td>
+        <td><a href="{{url_for('admin.delete_election', el_id=el.doc_id)}}"><span class="icon"><i class="fas fa-trash"></i></span></a></td>
       </tr>
     {% endfor %}
   </tbody>

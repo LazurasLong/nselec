@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from flask import (
-    Blueprint, render_template, request, flash, redirect, url_for
+    Blueprint, render_template, request, flash, redirect, url_for, abort
 )
 
 from nselec.auth import login_required
@@ -19,7 +19,7 @@ def index():
 @bp.route("/users")
 @login_required
 def users():
-    pass
+    return "todo"
 
 @bp.route("/elections")
 @login_required
@@ -32,6 +32,47 @@ def elections():
         categories[tt].append(el)
 
     return render_template("admin/elections.html", **categories)
+
+@bp.route("/elections/delete/<int:el_id>", methods=["GET", "POST"])
+@login_required
+def delete_election(el_id):
+    db = get_db()
+    el = db.get(doc_id=el_id)
+    if el is None:
+        abort(404)
+    tt = time_type(el['times']['start'], el['times']['end'])
+    if tt != "future":
+        abort(404)
+    if request.method == "POST":
+        db.remove(doc_ids=[el_id])
+        flash("Election removed successfully", "success")
+        return redirect(url_for("admin.elections"))
+    return render_template("admin/delete_election.html", el=el)
+
+@bp.route("/elections/actual_delete/<int:el_id>")
+@login_required
+def actual_delete(el_id):
+    db = get_db()
+    el = db.get(doc_id=el_id)
+    if el is None:
+        abort(404)
+    tt = time_type(el['times']['start'], el['times']['end'])
+    if tt != "future":
+        abort(404)
+    return redirect(url_for("admin.elections"))
+
+@bp.route("/elections/edit/<int:el_id>")
+@login_required
+def edit_election(el_id):
+    db = get_db()
+    el = db.get(doc_id=el_id)
+    if el is None:
+        abort(404)
+    tt = time_type(el['times']['start'], el['times']['end'])
+    if tt != "future":
+        abort(404)
+    return render_template("admin/edit_election.html", el=el)
+
 
 @bp.route("/elections/new/yesno", methods=["GET", "POST"])
 @login_required

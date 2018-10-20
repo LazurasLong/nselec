@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% block title %}New For/Against election{% endblock %}
+{% block title %}New ranked election{% endblock %}
 {% block heading %}
-<h1 class="title">New For/Against election</h1>
+<h1 class="title">New ranked election</h1>
 {% endblock %}
 {% block head %}
 <script>
@@ -60,8 +60,8 @@ window.addEventListener("load", function(e){
       <textarea type=text name=desc class="textarea"></textarea>
     </div>
   </div>
+  <label class="label">Start</label>
   <div class="field has-addons">
-    <label class="label">Start</label>
     <div class="control">
       <input name=start_date class="input" type="date">
     </div>
@@ -69,8 +69,8 @@ window.addEventListener("load", function(e){
       <input name=start_time class="input" type="time">
     </div>
   </div>
+  <label class="label">End</label>
   <div class="field has-addons">
-    <label class="label">End</label>
     <div class="control">
       <input name=end_date class="input" type="date">
     </div>
@@ -78,8 +78,9 @@ window.addEventListener("load", function(e){
       <input name=end_time class="input" type="time">
     </div>
   </div>
+  <label class="label">Options</label>
   <p>Note that the order of the options doesn't matter, they will be randomized when people see them</p>
-  <div id="options">
+  <div id="options" style="padding-bottom:10px;">
     <div class="field is-grouped">
       <div class="control">
         <input class="input" name=opt type=text>
@@ -89,12 +90,12 @@ window.addEventListener("load", function(e){
       </div>
     </div>
   </div>
-  <br>
   <div class="field">
     <div class="control">
-      <button id="add" type="button" class="button is-primary">Add option</button>
+      <button id="add" type="button" class="button"><span class="icon"><i class="fas fa-plus"></i></span></button>
     </div>
   </div>
+  <br>
 
   <div class="field">
     <div class="control">
