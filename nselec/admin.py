@@ -71,9 +71,20 @@ def edit_election(el_id):
                 return redirect(url_for("admin.elections"))
             else:
                 flash(data, "error")
+        elif el['type'] == "yesno":
+            succ, data = get_data_yesno()
+            if succ:
+                db.remove(doc_ids=[el_id])
+                db.insert(data)
+                flash("Election updated successfully!", "success")
+                return redirect(url_for("admin.elections"))
+            else:
+                flash(data, "error")
     else:
         if el['type'] == "ranked":
             return render_template("admin/edit_ranked.html", el=el)
+        elif el['type'] == "yesno":
+            return render_template("admin/edit_yesno.html", el=el)
 
 @bp.route("/elections/new/yesno", methods=["GET", "POST"])
 @login_required
