@@ -38,7 +38,8 @@ def create_app(test_config=None):
         "vote",
         "results",
         "auth",
-        "admin"
+        "admin",
+        "pages",
     )
 
     for modname in modules:
