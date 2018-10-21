@@ -18,7 +18,6 @@
 
   <thead>
     <tr>
-      <th><abbr title="Election ID">EID</abbr></th>
       <th>Name</th>
       <th>Type</th>
       <th>Starts</th>
@@ -30,7 +29,6 @@
   <tbody>
     {% for el in future %}
       <tr>
-        <td>{{ el.doc_id }}</td>
         <td>{{ el.name }}</td>
         <td>{{ el.type }}</td>
         <td><time datetime="{{el.times.start.iso}}" title="{{el.times.start.iso}}">{{ el.times.start.human }}</time></td>
@@ -46,7 +44,6 @@
 <table class="table is-hoverable">
   <thead>
     <tr>
-      <th><abbr title="Election ID">EID</abbr></th>
       <th>Name</th>
       <th>Type</th>
       <th>Started</th>
@@ -57,7 +54,6 @@
   <tbody>
     {% for el in present %}
       <tr>
-        <td>{{ el.doc_id }}</td>
         <td>{{ el.name }}</td>
         <td>{{ el.type }}</td>
         <td><time datetime="{{el.times.start.iso}}" title="{{el.times.start.iso}}">{{ el.times.start.human }}</time></td>
