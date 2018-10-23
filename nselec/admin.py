@@ -1,25 +1,52 @@
 from datetime import datetime
 
 from flask import (
-    Blueprint, render_template, request, flash, redirect, url_for, abort
+    Blueprint, render_template, request, flash, redirect, url_for, abort,
+    session
 )
 
-from nselec.auth import login_required
+from nselec.auth import login_required, role_required, get_user, gen_signup_token
 from nselec.db import get_db
 from nselec.utils import time_type
 from nselec.classes import FancyTime
+
+from tinydb import Query
 
 bp = Blueprint("admin", __name__)
 
 @bp.route("/")
 @login_required
 def index():
-    return render_template("admin/index.html")
+    return render_template("admin/index.html", user=get_user(session['user']))
 
 @bp.route("/users")
-@login_required
+@role_required(1)
 def users():
-    return "todo"
+    db = get_db()
+    users = db.table("users").all()
+    return render_template("admin/users.html", users=users)
+
+@bp.route("/users/new", methods=["GET", "POST"])
+@role_required(1)
+def new_user():
+    tok = None
+    if request.method == "POST":
+        username = request.form['username']
+        tok = gen_signup_token(username)
+    return render_template("admin/new_user.html", tok=tok)
+
+@bp.route("/users/delete/<username>", methods=["GET", "POST"])
+@role_required(1)
+def delete_user(username):
+    db = get_db()
+    user = db.table("users").get(Query().username == username)
+    if user is None:
+        abort(404)
+    if request.method == "POST":
+        db.table("users").remove(Query().username==username)
+        flash("User removed successfully", "success")
+        return redirect(url_for("admin.users"))
+    return render_template("admin/delete_user.html", username=username)
 
 @bp.route("/elections")
 @login_required

@@ -12,6 +12,13 @@ from tinydb import Query
 
 from nselec.db import get_db
 
+def get_user(username):
+    # utility function for other stuff to use
+    db = get_db()
+    usertab = db.table("users")
+    u = usertab.get(Query().username == username)
+    return u
+
 def check_user():
     if "user" not in session:
         # not even logged in
@@ -61,6 +68,9 @@ def role_required(role):
 
 bp = Blueprint("auth", __name__)
 
+def gen_signup_token(username):
+    return TimestampSigner(current_app.secret_key).sign(username.encode("utf-8")).decode("utf-8")
+
 @bp.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
@@ -76,10 +86,13 @@ def signup():
         else:
             db = get_db()
             users = db.table("users")
-            users.insert({"username":username,"password":generate_password_hash(request.form['password'])})
+            if users.contains(Query().username == username):
+                error = "That user already exists"
+            else:
+                users.insert({"username":username,"role":0,"password":generate_password_hash(request.form['password'])})
         if error is None:
             session.clear()
-            flash("Successfully created user!", "success")
+            flash("Successfully created user! You can now login.", "success")
             return redirect(url_for("auth.login"))
         else:
             flash(error, "error")
