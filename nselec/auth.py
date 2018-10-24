@@ -104,7 +104,6 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         db = get_db()
-        error = None
         usertab = db.table("users")
         User = Query()
         entry = usertab.get(User.username == username)
