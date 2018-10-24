@@ -1,8 +1,14 @@
 from datetime import datetime
 
 from flask import (
-    Blueprint, render_template, request, flash, redirect, url_for, abort,
-    session
+    Blueprint,
+    render_template,
+    request,
+    flash,
+    redirect,
+    url_for,
+    abort,
+    session,
 )
 
 from nselec.auth import login_required, role_required, get_user, gen_signup_token
@@ -14,10 +20,12 @@ from tinydb import Query
 
 bp = Blueprint("admin", __name__)
 
+
 @bp.route("/")
 @login_required
 def index():
-    return render_template("admin/index.html", user=get_user(session['user']))
+    return render_template("admin/index.html", user=get_user(session["user"]))
+
 
 @bp.route("/users")
 @role_required(1)
@@ -26,14 +34,16 @@ def users():
     users = db.table("users").all()
     return render_template("admin/users.html", users=users)
 
+
 @bp.route("/users/new", methods=["GET", "POST"])
 @role_required(1)
 def new_user():
     tok = None
     if request.method == "POST":
-        username = request.form['username']
+        username = request.form["username"]
         tok = gen_signup_token(username)
     return render_template("admin/new_user.html", tok=tok)
+
 
 @bp.route("/users/delete/<username>", methods=["GET", "POST"])
 @role_required(1)
@@ -43,22 +53,30 @@ def delete_user(username):
     if user is None:
         abort(404)
     if request.method == "POST":
-        db.table("users").remove(Query().username==username)
+        db.table("users").remove(Query().username == username)
         flash("User removed successfully", "success")
         return redirect(url_for("admin.users"))
     return render_template("admin/delete_user.html", username=username)
+
+
+@bp.route("/users/edit/<username>", methods=["GET", "POST"])
+@role_required(1)
+def edit_user(username):
+    pass
+
 
 @bp.route("/elections")
 @login_required
 def elections():
     db = get_db()
     els = db.all()
-    categories = {"past":[],"present":[],"future":[]}
+    categories = {"past": [], "present": [], "future": []}
     for el in els:
-        tt = time_type(el['times']['start'], el['times']['end'])
+        tt = time_type(el["times"]["start"], el["times"]["end"])
         categories[tt].append(el)
 
     return render_template("admin/elections.html", **categories)
+
 
 @bp.route("/elections/delete/<int:el_id>", methods=["GET", "POST"])
 @login_required
@@ -67,7 +85,7 @@ def delete_election(el_id):
     el = db.get(doc_id=el_id)
     if el is None:
         abort(404)
-    tt = time_type(el['times']['start'], el['times']['end'])
+    tt = time_type(el["times"]["start"], el["times"]["end"])
     if tt != "future":
         abort(404)
     if request.method == "POST":
@@ -84,12 +102,11 @@ def edit_election(el_id):
     el = db.get(doc_id=el_id)
     if el is None:
         abort(404)
-    tt = time_type(el['times']['start'], el['times']['end'])
+    tt = time_type(el["times"]["start"], el["times"]["end"])
     if tt != "future":
         abort(404)
-
     if request.method == "POST":
-        if el['type'] == "ranked":
+        if el["type"] == "ranked":
             succ, data = get_data_ranked()
             if succ:
                 db.remove(doc_ids=[el_id])
@@ -98,7 +115,7 @@ def edit_election(el_id):
                 return redirect(url_for("admin.elections"))
             else:
                 flash(data, "error")
-        elif el['type'] == "yesno":
+        elif el["type"] == "yesno":
             succ, data = get_data_yesno()
             if succ:
                 db.remove(doc_ids=[el_id])
@@ -108,10 +125,11 @@ def edit_election(el_id):
             else:
                 flash(data, "error")
     else:
-        if el['type'] == "ranked":
+        if el["type"] == "ranked":
             return render_template("admin/edit_ranked.html", el=el)
-        elif el['type'] == "yesno":
+        elif el["type"] == "yesno":
             return render_template("admin/edit_yesno.html", el=el)
+
 
 @bp.route("/elections/new/yesno", methods=["GET", "POST"])
 @login_required
@@ -127,6 +145,7 @@ def new_yesno():
             flash(data, "error")
     return render_template("admin/new_yesno.html")
 
+
 @bp.route("/elections/new/ranked", methods=["GET", "POST"])
 @login_required
 def new_ranked():
@@ -136,59 +155,58 @@ def new_ranked():
             db = get_db()
             db.insert(data)
             flash("Successfully added election!", "success")
-            return redirect(url_for('admin.elections'))
+            return redirect(url_for("admin.elections"))
         else:
             flash(data, "error")
     return render_template("admin/new_ranked.html")
 
 
 def get_data_yesno():
-    name = request.form['name']
-    desc = request.form['desc']
-    start = request.form['start_date']+" "+request.form['start_time']
-    end = request.form['end_date']+" "+request.form['end_time']
+    name = request.form["name"]
+    desc = request.form["desc"]
+    start = request.form["start_date"] + " " + request.form["start_time"]
+    end = request.form["end_date"] + " " + request.form["end_time"]
     fstr = "%Y-%m-%d %H:%M"
     start_dt = datetime.strptime(start, fstr)
     end_dt = datetime.strptime(end, fstr)
     start_f = FancyTime(start_dt)
     end_f = FancyTime(end_dt)
-    return True, {
-        "name": name,
-        "desc": desc,
-        "times": {
-            "start": start_f,
-            "end": end_f
+    return (
+        True,
+        {
+            "name": name,
+            "desc": desc,
+            "times": {"start": start_f, "end": end_f},
+            "type": "yesno",
+            "voters": [],
+            "votes": {"for": 0, "against": 0},
         },
-        "type": "yesno",
-        "voters": [],
-        "votes": {
-            "for": 0,
-            "against": 0
-        }
-    }
+    )
+
 
 def get_data_ranked():
-    name = request.form['name']
-    desc = request.form['desc']
-    start = request.form['start_date']+" "+request.form['start_time']
-    end = request.form['end_date']+" "+request.form['end_time']
+    name = request.form["name"]
+    desc = request.form["desc"]
+    start = request.form["start_date"] + " " + request.form["start_time"]
+    end = request.form["end_date"] + " " + request.form["end_time"]
     fstr = "%Y-%m-%d %H:%M"
     start_dt = datetime.strptime(start, fstr)
     end_dt = datetime.strptime(end, fstr)
     start_f = FancyTime(start_dt)
     end_f = FancyTime(end_dt)
-    options = request.form.getlist('opt')
+    options = request.form.getlist("opt")
     if len(options) < 2:
         return False, "You need at least 2 options"
-    return True,  {
-        "name":name,
-        "desc":desc,
-        "type": "ranked",
-        "times": {
-            "start":start_f,
-            "end":end_f
+    return (
+        True,
+        {
+            "name": name,
+            "desc": desc,
+            "type": "ranked",
+            "times": {"start": start_f, "end": end_f},
+            "voters": [],
+            "votes": [],
+            "options": options,
         },
-        "voters": [],
-        "votes": [],
-        "options": options,
-    }
+    )
+
