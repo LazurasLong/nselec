@@ -5,7 +5,7 @@
 {% endblock %}
 {% block head %}
 <script>
-var optstr = '<div class="field is-grouped">\
+  var optstr = '<div class="field is-grouped">\
   <div class="control">\
     <input class="input" name=opt type=text>\
   </div>\
@@ -14,40 +14,40 @@ var optstr = '<div class="field is-grouped">\
   </div>\
 </div>';
 
-function htmlStringToElement(str) {
-  var tmp = document.createElement('div');
-  tmp.innerHTML = str.trim();
-  return tmp.firstChild;
-}
-function removeElement(element) {
-  element.parentElement.removeChild(element)
-}
-function makeDeleteButton(btn) {
-  btn.addEventListener("click", function(e){
-    removeElement(this.parentElement.parentElement);
-  });
-}
-function addOption(s) {
-  if (typeof s != "string") {
-    s = "";
+  function htmlStringToElement(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str.trim();
+    return tmp.firstChild;
   }
-  var n = htmlStringToElement(optstr);
-  makeDeleteButton(n.children[1].children[0]);
-  n.children[0].children[0].value = s;
-  document.getElementById("options").appendChild(n);
-}
-window.addEventListener("load", function(e){
-  document.getElementById("add").addEventListener("click", addOption);
-  makeDeleteButton(document.getElementById("initialdel"));
+  function removeElement(element) {
+    element.parentElement.removeChild(element)
+  }
+  function makeDeleteButton(btn) {
+    btn.addEventListener("click", function (e) {
+      removeElement(this.parentElement.parentElement);
+    });
+  }
+  function addOption(s) {
+    if (typeof s != "string") {
+      s = "";
+    }
+    var n = htmlStringToElement(optstr);
+    makeDeleteButton(n.children[1].children[0]);
+    n.children[0].children[0].value = s;
+    document.getElementById("options").appendChild(n);
+  }
+  window.addEventListener("load", function (e) {
+    document.getElementById("add").addEventListener("click", addOption);
+    makeDeleteButton(document.getElementById("initialdel"));
 
-  var already_opts = {{ el.options | tojson | safe }};
-  document.getElementById("initialdel").click();
-  already_opts.forEach(addOption);
+    var already_opts = JSON.parse("{{ el.options | tojson | safe }}");
+    document.getElementById("initialdel").click();
+    already_opts.forEach(addOption);
 
-  var sub = document.getElementById("submit");
-  sub.disabled = false;
-  sub.classList.remove("is-loading")
-});
+    var sub = document.getElementById("submit");
+    sub.disabled = false;
+    sub.classList.remove("is-loading");
+  });
 
 </script>
 {% endblock %}

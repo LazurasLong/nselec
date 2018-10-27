@@ -24,12 +24,12 @@
   </thead>
   <tbody>
     {% for user in users %}
-      <tr>
-        <td>{{ user.username }}</td>
-        <td>{% if user.role == 0 %}User{% elif user.role == 1 %}Admin{% else %}Unknown{% endif %}</td>
-        <td><a href="{#{url_for('admin.edit_password')}#}"><span class="icon"><i class="fas fa-edit"></i></span></a></td>
-        <td><a href="{{url_for('admin.delete_user', username=user.username)}}"><span class="icon"><i class="fas fa-trash"></i></span></a></td>
-      </tr>
+    <tr>
+      <td>{{ user.username }}</td>
+      <td>{% if user.role == 0 %}User{% elif user.role == 1 %}Admin{% else %}Unknown{% endif %}</td>
+      <td><a href="{{url_for('admin.edit_user', username=user.username)}}"><span class="icon"><i class="fas fa-edit"></i></span></a></td>
+      <td><a href="{{url_for('admin.delete_user', username=user.username)}}"><span class="icon"><i class="fas fa-trash"></i></span></a></td>
+    </tr>
     {% endfor %}
   </tbody>
 </table>

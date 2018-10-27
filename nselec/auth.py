@@ -19,6 +19,16 @@ def get_user(username):
     u = usertab.get(Query().username == username)
     return u
 
+def set_password(username, password):
+    pwh = generate_password_hash(password)
+    del password # i have no idea if that will do anything but we can try i guess
+    usertab = get_db().table("users")
+    u = usertab.get(Query().username == username)
+    if u == None:
+        return False
+    else:
+        usertab.update({"password":pwh}, Query().username == username)
+
 def check_user():
     if "user" not in session:
         # not even logged in

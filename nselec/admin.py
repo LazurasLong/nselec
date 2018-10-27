@@ -11,7 +11,7 @@ from flask import (
     session,
 )
 
-from nselec.auth import login_required, role_required, get_user, gen_signup_token
+from nselec.auth import login_required, role_required, get_user, gen_signup_token, set_password
 from nselec.db import get_db
 from nselec.utils import time_type
 from nselec.classes import FancyTime
@@ -62,8 +62,28 @@ def delete_user(username):
 @bp.route("/users/edit/<username>", methods=["GET", "POST"])
 @role_required(1)
 def edit_user(username):
-    pass
-
+    db = get_db()
+    usertab = db.table("users")
+    user = usertab.get(Query().username == username)
+    if user is None:
+        abort(404)
+    if request.method == "POST":
+        err = None
+        pw = request.form["password"]
+        role = request.form['role']
+        if not (0 <= int(role) <= 1):
+            err = "Role must be an integer between 0 and 1"
+        else:
+            if pw != "":
+                set_password(username, pw)
+            usertab.update({"role":int(role)}, Query().username == username)
+        if err is None:
+            flash("User updated successfully!", "success")
+            return redirect(url_for("admin.users"))
+        else:
+            flash(err, "error")
+    return render_template("admin/edit_user.html", user=user)
+            
 
 @bp.route("/elections")
 @login_required
