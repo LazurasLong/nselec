@@ -10,7 +10,7 @@ def noconf_voters_example_data():
     # this function is the backup
     return {"testlandia":"Testlandia"}
 
-def create_app(test_config=None):
+def create_app():
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY = "dev",
@@ -18,10 +18,7 @@ def create_app(test_config=None):
         GET_VOTERS = noconf_voters_example_data,
     )
 
-    if test_config is None:
-        app.config.from_pyfile('config.py', silent=True)
-    else:
-        app.config.from_mapping(test_config)
+    app.config.from_pyfile('config.py', silent=True)
 
     try:
         os.makedirs(app.instance_path)
