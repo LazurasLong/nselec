@@ -28,15 +28,15 @@ def create_app():
         pass
 
     from . import db
-
     db.init_app(app)
 
-    from . import election_list
+    from . import cli
+    cli.init_app(app)
 
+    from . import election_list
     app.register_blueprint(election_list.bp)
 
     modules = ("vote", "results", "auth", "admin", "pages")
-
     for modname in modules:
         mod = importlib.import_module("nselec." + modname)
         bp = mod.bp
