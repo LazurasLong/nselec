@@ -1,2 +1,1 @@
-*.html linguist-language=html+jinja
-*.j2 linguist-language=html+jinja
+nselec/templates/** linguist-language=html+jinja
