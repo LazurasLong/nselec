@@ -9,7 +9,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   $dr git tag -s -a "v$ver" -m "Version $ver"
   $dr git push origin "v$ver"
   $dr python setup.py sdist bdist_wheel
-  $dr twine upload dist/nselec-${ver}*
+  $dr twine upload dist/nselec-${ver}-*
   echo "Done!"
 else
   echo "Ok, have a nice day"
