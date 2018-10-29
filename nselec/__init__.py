@@ -45,7 +45,7 @@ def create_app():
     app.add_url_rule("/", endpoint="index")
 
     @app.context_processor
-    def cp():
+    def version_context():
         return {"version": __version__}
 
     return app
