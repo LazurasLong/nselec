@@ -5,5 +5,4 @@ instance/
 dist/
 build/
 *.egg-info/
-build.py
 .vscode/
