@@ -1,5 +1,6 @@
 import os
 import importlib
+import random
 
 __version__ = "2.0rc3"
 
@@ -47,5 +48,14 @@ def create_app():
     @app.context_processor
     def version_context():
         return {"version": __version__}
+
+    @app.template_filter("shuffle")
+    def shuffle_filter(s):
+        try:
+            result = list(s)
+            random.shuffle(result)
+            return result
+        except:
+            return s
 
     return app
