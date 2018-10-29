@@ -34,8 +34,8 @@ You will need:
             return data['example']
         ```
         - The other required (well, not technically, but you definitely need to on production otherwise people could bypass all the security) field is `SECRET_KEY`. Check out the [flask docs](http://flask.pocoo.org/docs/1.0/config/#SECRET_KEY) for what you should set this to.
-        - Another field you can set is `DATABASE` which should be the filename of the database to use. It defaults
-        to `nselec.db` which should be fine for most people, but you can change it here if you really want.
+        - Another field you can set is `DATABASE` which should be the filename of the database to use. It defaults 
+        to `"nselec.db"` in the instance folder, which should be fine for most people, but you can change it here if you really want.
 4. (Optional) See if it works: `flask run` then visit the address it shows you. Do whatever you want, check
     it all works, then come back here.
 5. Connect it to your production WSGI server. This really depends on what server you're using, so you should read the 
