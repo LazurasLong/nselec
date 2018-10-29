@@ -2,7 +2,7 @@ import os
 import importlib
 import random
 
-__version__ = "2.0rc3"
+__version__ = "2.0rc4"
 
 from flask import Flask
 
@@ -29,12 +29,15 @@ def create_app():
         pass
 
     from . import db
+
     db.init_app(app)
 
     from . import cli
+
     cli.init_app(app)
 
     from . import election_list
+
     app.register_blueprint(election_list.bp)
 
     modules = ("vote", "results", "auth", "admin", "pages")
