@@ -16,7 +16,7 @@ shift
 dr=
 forcevenv=
 
-while getopts ":v" i; do
+while getopts ":vd" i; do
   case $i in
     v) forcevenv=y ;;
     d) dr=echo ;;
@@ -31,7 +31,10 @@ if [[ -z ${VIRTUAL_ENV+x} && "$forcevenv" != y ]]; then
 fi
 
 ver=$(python -c "from $proj import __version__ as v;print(v)")
-[[ $? -eq 0 ]] || echo "Python error - aborting" 1>&2; exit 1
+if [[ $? -ne 0 ]]; then
+  echo "Python error - aborting" 1>&2
+  exit 1
+fi
 read -p "Building $proj v$ver - continue? [y/n] " -n 1 -r
 echo
 
@@ -39,7 +42,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   $dr git tag -s -a "v$ver" -m "Version $ver"
   $dr git push origin "v$ver"
   $dr python setup.py sdist bdist_wheel
-  $dr twine upload dist/${proj}-${ver}-*
+  $dr twine upload dist/${proj}-${ver}-*.whl dist/${proj}-${ver}.*
   echo "Done!"
 else
   echo "Ok, have a nice day"
