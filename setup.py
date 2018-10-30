@@ -8,7 +8,7 @@ setup(
     name="nselec",
     version=nselec_version,
     author="Calvin Edwards",
-    description="The second iteration of Conifer's NationStates election site.",
+    description="Election website for your NationStates region",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/ed588/nselec",
