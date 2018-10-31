@@ -2,9 +2,10 @@
 
 usage ()
 {
-  echo "Usage: $0 <projname> [ -v ] [ -d ]" 1>&2
+  echo "Usage: $0 <projname> [ -v ] [ -d ] [ -b ]" 1>&2
   echo "  -v : virtualenv override   - disable checking for virtualenv" 1>&2
   echo "  -d : dry-run               - don't actually do anything" 1>&2
+  echo "  -b : branch                - don't check if we're on the master branch" 1>&2
   exit 1;
 }
 
@@ -15,14 +16,23 @@ shift
 
 dr=
 forcevenv=
+nocheckbranch=
 
-while getopts ":vd" i; do
+while getopts ":vdb" i; do
   case $i in
     v) forcevenv=y ;;
     d) dr=echo ;;
+    b) nocheckbranch=y ;;
     *) usage ;;
   esac
 done
+
+currentbranch=$(git symbolic-ref --short HEAD)
+if [[ "$currentbranch" != "master" && "$nocheckbranch" != y]]; then
+  echo "Fatal: you do not appear to be on master" 1>&2
+  echo "(Use -b to override)" 1>&2
+  exit 1
+fi
 
 if [[ -z ${VIRTUAL_ENV+x} && "$forcevenv" != y ]]; then
   echo "Fatal: you do not appear to be in a virtualenv." 1>&2
