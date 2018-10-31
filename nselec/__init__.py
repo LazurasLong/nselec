@@ -49,11 +49,11 @@ def create_app():
     app.add_url_rule("/", endpoint="index")
 
     @app.context_processor
-    def version_context():
+    def _version_context():
         return {"version": __version__}
 
     @app.template_filter("shuffle")
-    def shuffle_filter(s):
+    def _shuffle_filter(s):
         try:
             result = list(s)
             random.shuffle(result)
