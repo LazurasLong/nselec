@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}500 Internal Server Error{% endblock %}
+{% block main %}
+<div class="content">
+    <h1>500 Internal Server Error</h1>
+    <p>
+        An internal server error occurred. This is probably the fault of whoever made this site. Please
+        contact them with details of what you were doing.
+    </p>
+    <p>
+        Additionally, if you know what you're doing, you could try opening an issue on the
+        <a href="https://github.com/ed588/nselec">nselec GitHub repo</a>.
+    </p>
+    <p>
+        <a href="{{url_for('index')}}">Return to the main page.</a>
+    </p>
+</div>
