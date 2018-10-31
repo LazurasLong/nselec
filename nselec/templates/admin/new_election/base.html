@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}New {% block type %}{% endblock %} election{% endblock %}
+{% block head %}
+<script>
+    window.addEventListener("load", function () {
+        var sub = document.getElementById("submit");
+        sub.disabled = false;
+        sub.classList.remove("is-loading");
+    });
+</script>
+{% endblock %}
+{% block heading %}
+<h1 class="title">New {{ self.type() }} election</h1>
+{% endblock %}
+
+{% block main %}
+<div class="content">
+    {% block description %}{% endblock %}
+</div>
+<form method=POST>
+    <div class="field">
+        <label class="label">Name</label>
+        <div class="control">
+            <input name=name class="input" type="text">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Description</label>
+        <div class="control">
+            <textarea type=text name=desc class="textarea"></textarea>
+        </div>
+    </div>
+    <label class="label">Start</label>
+    <div class="field has-addons">
+        <div class="control">
+            <input name=start_date class="input" type="date">
+        </div>
+        <div class="control">
+            <input name=start_time class="input" type="time">
+        </div>
+    </div>
+    <label class="label">End</label>
+    <div class="field has-addons">
+        <div class="control">
+            <input name=end_date class="input" type="date">
+        </div>
+        <div class="control">
+            <input name=end_time class="input" type="time">
+        </div>
+    </div>
+    {% block fields %}{% endblock %}
+    <div class="field">
+        <div class="control">
+            <button id="submit" disabled class="button is-link is-loading">Submit</button>
+        </div>
+    </div>
+</form>
+{% endblock %}
