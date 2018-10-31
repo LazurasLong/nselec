@@ -5,21 +5,21 @@
 {% endblock %}
 {% block head %}
 <script>
-function htmlStringToElement(str) {
-  var tmp = document.createElement('div');
-  tmp.innerHTML = str.trim();
-  return tmp.firstChild;
-}
-function removeElement(element) {
-  element.parentElement.removeChild(element)
-}
-function makeDeleteButton(btn) {
-  btn.addEventListener("click", function(e){
-    removeElement(this.parentElement.parentElement);
-  });
-}
-function addOption() {
-  var str = '<div class="field is-grouped">\
+  function htmlStringToElement(str) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = str.trim();
+    return tmp.firstChild;
+  }
+  function removeElement(element) {
+    element.parentElement.removeChild(element)
+  }
+  function makeDeleteButton(btn) {
+    btn.addEventListener("click", function (e) {
+      removeElement(this.parentElement.parentElement);
+    });
+  }
+  function addOption() {
+    var str = '<div class="field is-grouped">\
     <div class="control">\
       <input class="input" name=opt type=text>\
     </div>\
@@ -27,18 +27,18 @@ function addOption() {
       <button type="button" class="button"><span class="icon"><i class="fas fa-trash"></i></span></button>\
     </div>\
   </div>';
-  var n = htmlStringToElement(str);
-  makeDeleteButton(n.children[1].children[0]);
-  document.getElementById("options").appendChild(n);
-}
-window.addEventListener("load", function(e){
-  document.getElementById("add").addEventListener("click", addOption);
-  makeDeleteButton(document.getElementById("initialdel"));
+    var n = htmlStringToElement(str);
+    makeDeleteButton(n.children[1].children[0]);
+    document.getElementById("options").appendChild(n);
+  }
+  window.addEventListener("load", function (e) {
+    document.getElementById("add").addEventListener("click", addOption);
+    makeDeleteButton(document.getElementById("initialdel"));
 
-  var sub = document.getElementById("submit");
-  sub.disabled = false;
-  sub.classList.remove("is-loading")
-});
+    var sub = document.getElementById("submit");
+    sub.disabled = false;
+    sub.classList.remove("is-loading")
+  });
 
 </script>
 {% endblock %}

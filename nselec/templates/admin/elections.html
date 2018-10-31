@@ -28,14 +28,14 @@
   </thead>
   <tbody>
     {% for el in future %}
-      <tr>
-        <td>{{ el.name }}</td>
-        <td>{{ el.type }}</td>
-        <td><time datetime="{{el.times.start.iso}}" title="{{el.times.start.iso}}">{{ el.times.start.human }}</time></td>
-        <td><time datetime="{{el.times.end.iso}}" title="{{el.times.end.iso}}">{{ el.times.end.human }}</time></td>
-        <td><a href="{{url_for('admin.edit_election', el_id=el.doc_id)}}"><span class="icon"><i class="fas fa-edit"></i></span></a></td>
-        <td><a href="{{url_for('admin.delete_election', el_id=el.doc_id)}}"><span class="icon"><i class="fas fa-trash"></i></span></a></td>
-      </tr>
+    <tr>
+      <td>{{ el.name }}</td>
+      <td>{{ el.type }}</td>
+      <td><time datetime="{{el.times.start.iso}}" title="{{el.times.start.iso}}">{{ el.times.start.human }}</time></td>
+      <td><time datetime="{{el.times.end.iso}}" title="{{el.times.end.iso}}">{{ el.times.end.human }}</time></td>
+      <td><a href="{{url_for('admin.edit_election', el_id=el.doc_id)}}"><span class="icon"><i class="fas fa-edit"></i></span></a></td>
+      <td><a href="{{url_for('admin.delete_election', el_id=el.doc_id)}}"><span class="icon"><i class="fas fa-trash"></i></span></a></td>
+    </tr>
     {% endfor %}
   </tbody>
 </table>
@@ -53,13 +53,13 @@
   </thead>
   <tbody>
     {% for el in present %}
-      <tr>
-        <td>{{ el.name }}</td>
-        <td>{{ el.type }}</td>
-        <td><time datetime="{{el.times.start.iso}}" title="{{el.times.start.iso}}">{{ el.times.start.human }}</time></td>
-        <td><time datetime="{{el.times.end.iso}}" title="{{el.times.end.iso}}">{{ el.times.end.human }}</time></td>
-        <td><a href="{{url_for('vote.election', el_id=el.doc_id)}}"><span class="icon"><i class="fas fa-arrow-right"></i></span></a></td>
-      </tr>
+    <tr>
+      <td>{{ el.name }}</td>
+      <td>{{ el.type }}</td>
+      <td><time datetime="{{el.times.start.iso}}" title="{{el.times.start.iso}}">{{ el.times.start.human }}</time></td>
+      <td><time datetime="{{el.times.end.iso}}" title="{{el.times.end.iso}}">{{ el.times.end.human }}</time></td>
+      <td><a href="{{url_for('vote.election', el_id=el.doc_id)}}"><span class="icon"><i class="fas fa-arrow-right"></i></span></a></td>
+    </tr>
     {% endfor %}
   </tbody>
 </table>
