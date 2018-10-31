@@ -28,24 +28,31 @@ def create_app():
     except OSError:
         pass
 
-    from . import db
-
-    db.init_app(app)
-
-    from . import cli
-
-    cli.init_app(app)
+    # fmt: off
+    plugins = (
+        "db",
+        "cli",
+        "errors"
+    )
+    for plugname in plugins:
+        plug = importlib.import_module("nselec." + plugname)
+        plug.init_app(app)
 
     from . import election_list
-
     app.register_blueprint(election_list.bp)
 
-    modules = ("vote", "results", "auth", "admin", "pages")
+    modules = (
+        "vote",
+        "results",
+        "auth",
+        "admin",
+        "pages"
+    )
     for modname in modules:
         mod = importlib.import_module("nselec." + modname)
         bp = mod.bp
         app.register_blueprint(bp, url_prefix="/" + modname)
-
+    # fmt: on
     app.add_url_rule("/", endpoint="index")
 
     @app.context_processor
