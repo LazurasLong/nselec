@@ -2,7 +2,7 @@ import os
 import importlib
 import random
 
-__version__ = "2.0.1.post1"
+__version__ = "2.1.0"
 
 from flask import Flask
 
