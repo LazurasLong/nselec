@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 {% from "lib.j2" import verify_modal %}
 {% block title %}{{ el.name }}{% endblock %}
+{% block head %}
+<script>
+    window.addEventListener("load", function () {
+        var b = document.getElementById("btn");
+        b.disabled = false;
+        b.classList.remove("is-loading");
+    });
+</script>
+{% endblock %}
 {% block heading %}
 <h1 class="title is-1">{{ el.name }}</h1>
 <nav class="breadcrumb" aria-label="breadcrumbs">
@@ -40,7 +49,7 @@
             </div>
         </div>
         {% block options %}{% endblock %}
-        <button class="button is-link">
+        <button disabled="disabled" id="btn" class="button is-link is-loading">
             <span>Submit Vote</span>
             <span class="icon is-small">
                 <i class="fas fa-arrow-right"></i>
