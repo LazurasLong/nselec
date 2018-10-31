@@ -163,7 +163,7 @@ def new_yesno():
             return redirect(url_for("admin.elections"))
         else:
             flash(data, "error")
-    return render_template("admin/new_yesno.html")
+    return render_template("admin/new_election/yesno.html")
 
 
 @bp.route("/elections/new/ranked", methods=["GET", "POST"])
@@ -178,7 +178,7 @@ def new_ranked():
             return redirect(url_for("admin.elections"))
         else:
             flash(data, "error")
-    return render_template("admin/new_ranked.html")
+    return render_template("admin/new_election/ranked.html")
 
 
 def get_data_yesno():
