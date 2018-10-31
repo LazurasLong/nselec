@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ el.name }}{% endblock %}
+{% block heading %}
+<h1 class="title is-1">{{ el.name }}</h1>
+<nav class="breadcrumb" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="{{url_for('index')}}">Elections</a></li>
+    <li class="is-active"><a href='#'>Results</a></li>
+    <li class="is-active"><a href="#" aria-current="page">{{ el.name }}</a></li>
+  </ul>
+</nav>
+{% endblock %}
+{% block main %}
+<div class="content">
+  <p class="is-3">{{ el.desc }}</p>
+  <h2>Result:</h2>
+  {% block result %}{% endblock %}
+  <h2>Votes:</h2>
+  {% block votes %}{% endblock %}
+  <h2>Participating Voters:</h2>
+  {% block voters %}{% endblock %}
+</div>
+{% endblock %}
